@@ -1,0 +1,166 @@
+# Copyright 2025 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: blueprints.cloud.google.com/v1alpha1
+kind: BlueprintMetadata
+metadata:
+  name: terraform-google-cloud-composer-google-composer-environment
+  annotations:
+    config.kubernetes.io/local-config: "true"
+spec:
+  info:
+    title: Google Composer Environment module
+    source:
+      repo: https://github.com/aakritic001/terraform-google-cloud-composer.git
+      sourceType: git
+      dir: /modules/google-composer-environment
+    version: 1.0.4
+    actuationTool:
+      flavor: Terraform
+      version: ">= 1.3"
+    description: {}
+  content:
+    examples:
+      - name: google-composer-environment
+        location: examples/google-composer-environment
+  interfaces:
+    variables:
+      - name: project_id
+        description: The ID of the project in which the resource belongs.
+        varType: string
+        required: true
+      - name: env_name
+        description: Name of the Composer environment.
+        varType: string
+        required: true
+      - name: region
+        description: The region where the Composer environment will be created.
+        varType: string
+        required: true
+      - name: labels
+        description: User-defined labels for this environment.
+        varType: map(string)
+        defaultValue: {}
+      - name: image_version
+        description: The version of the software running in the environment. e.g., composer-3-airflow-2.7.3
+        varType: string
+        required: true
+      - name: service_account
+        description: The Google Cloud Platform Service Account to be used by the node VMs. Must have roles/composer.worker.
+        varType: string
+        required: true
+      - name: environment_size
+        description: The environment size (ENVIRONMENT_SIZE_SMALL, ENVIRONMENT_SIZE_MEDIUM, ENVIRONMENT_SIZE_LARGE).
+        varType: string
+        defaultValue: ENVIRONMENT_SIZE_SMALL
+      - name: enable_private_environment
+        description: If true, a private Composer environment will be created.
+        varType: bool
+        defaultValue: false
+      - name: network
+        description: The Compute Engine network to be used for machine communications.
+        varType: string
+      - name: subnetwork
+        description: The Compute Engine subnetwork to be used for machine communications.
+        varType: string
+      - name: composer_network_attachment
+        description: PSC (Private Service Connect) Network entry point.
+        varType: string
+      - name: workloads_config
+        description: The Kubernetes workloads configuration for the GKE cluster.
+        varType: |-
+          object({
+              scheduler = optional(object({
+                cpu        = optional(number)
+                memory_gb  = optional(number)
+                storage_gb = optional(number)
+                count      = optional(number)
+              }))
+              triggerer = optional(object({
+                cpu       = number
+                memory_gb = number
+                count     = number
+              }))
+              dag_processor = optional(object({
+                cpu        = optional(number)
+                memory_gb  = optional(number)
+                storage_gb = optional(number)
+                count      = number
+              }))
+              web_server = optional(object({
+                cpu        = optional(number)
+                memory_gb  = optional(number)
+                storage_gb = optional(number)
+              }))
+              worker = optional(object({
+                cpu        = optional(number)
+                memory_gb  = optional(number)
+                storage_gb = optional(number)
+                min_count  = optional(number)
+                max_count  = optional(number)
+              }))
+            })
+        defaultValue: {}
+      - name: airflow_config_overrides
+        description: Apache Airflow configuration properties to override.
+        varType: map(string)
+        defaultValue: {}
+      - name: pypi_packages
+        description: Custom Python Package Index (PyPI) packages to be installed.
+        varType: map(string)
+        defaultValue: {}
+      - name: env_variables
+        description: Additional environment variables for the Airflow processes.
+        varType: map(string)
+        defaultValue: {}
+      - name: kms_key_name
+        description: Customer-managed Encryption Key for the environment.
+        varType: string
+      - name: storage_bucket
+        description: Name of an existing Cloud Storage bucket to be used by the environment. If null, Composer creates one.
+        varType: string
+        connections:
+          - source:
+              source: github.com/terraform-google-modules/terraform-google-cloud-storage//modules/simple_bucket
+              version: ">= 8.0"
+            spec:
+              outputExpr: name
+    outputs:
+      - name: airflow_uri
+        description: The URI of the Apache Airflow Web UI hosted within this environment.
+      - name: dag_gcs_prefix
+        description: The Cloud Storage prefix of the DAGs for this environment.
+      - name: gke_cluster
+        description: The Kubernetes Engine cluster used to run this environment.
+      - name: id
+        description: The identifier for the Composer environment.
+      - name: name
+        description: The name of the Composer environment.
+  requirements:
+    roles:
+      - level: Project
+        roles:
+          - roles/composer.admin
+          - roles/iam.serviceAccountUser
+          - roles/storage.admin
+    services:
+      - composer.googleapis.com
+      - cloudresourcemanager.googleapis.com
+      - iam.googleapis.com
+      - serviceusage.googleapis.com
+      - storage.googleapis.com
+      - compute.googleapis.com
+    providerVersions:
+      - source: hashicorp/google
+        version: ">= 6.46, < 8"
