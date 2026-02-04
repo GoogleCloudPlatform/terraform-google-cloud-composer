@@ -16,12 +16,12 @@
 
 output "composer_environment_id" {
   description = "The identifier for the Composer environment."
-  value       = module.cloud_composer_environment.id
+  value       = module.cloud_composer_environment.composer_environment_id
 }
 
 output "composer_environment_name" {
   description = "The name of the Composer environment."
-  value       = module.cloud_composer_environment.name
+  value       = module.cloud_composer_environment.composer_environment_name
 }
 
 output "gke_cluster" {
