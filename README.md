@@ -23,15 +23,14 @@ Basic usage of this module is as follows:
 ```hcl
 module "cloud_composer_environment" {
   source  = "GoogleCloudPlatform/cloud-composer/google//modules/google-composer-environment"
-  version = "~> 0.1" # Replace with the desired version
 
   project_id      = "<PROJECT ID>"
   env_name        = "<COMPOSER ENV NAME>"
   region          = "<GCP REGION>"
-  image_version   = "composer-3-airflow-2.7.3" # Specify appropriate image version
+  image_version   = "composer-3-airflow-2.7.3"
   service_account = "<SERVICE ACCOUNT EMAIL>"
-
 }
+```
 
 Functional examples are included in the
 [examples](./examples/) directory.
