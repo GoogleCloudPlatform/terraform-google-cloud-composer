@@ -22,7 +22,7 @@ spec:
   info:
     title: Google Composer Environment module
     source:
-      repo: https://github.com/aakritic001/terraform-google-cloud-composer.git
+      repo: https://github.com/GoogleCloudPlatform/terraform-google-cloud-composer.git
       sourceType: git
       dir: /modules/google-composer-environment
   ui:

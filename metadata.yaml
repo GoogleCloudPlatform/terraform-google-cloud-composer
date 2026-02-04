@@ -22,10 +22,13 @@ spec:
   info:
     title: terraform-google-cloud-composer
     source:
-      repo: https://github.com/aakritic001/terraform-google-cloud-composer.git
+      repo: https://github.com/GoogleCloudPlatform/terraform-google-cloud-composer.git
       sourceType: git
     description: {}
   content:
+    documentation:
+      - title: Cloud Composer Documentation
+        url: https://cloud.google.com/composer/docs
     subBlueprints:
       - name: google-composer-environment
         location: modules/google-composer-environment
