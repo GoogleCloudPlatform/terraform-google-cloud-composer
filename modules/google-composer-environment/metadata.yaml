@@ -1,4 +1,4 @@
-# Copyright 2025 Google LLC
+# Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,7 +25,6 @@ spec:
       repo: https://github.com/aakritic001/terraform-google-cloud-composer.git
       sourceType: git
       dir: /modules/google-composer-environment
-    version: 1.0.4
     actuationTool:
       flavor: Terraform
       version: ">= 1.3"
@@ -139,28 +138,30 @@ spec:
     outputs:
       - name: airflow_uri
         description: The URI of the Apache Airflow Web UI hosted within this environment.
+      - name: composer_environment_id
+        description: The identifier for the Composer environment.
+      - name: composer_environment_name
+        description: The name of the Composer environment.
       - name: dag_gcs_prefix
         description: The Cloud Storage prefix of the DAGs for this environment.
       - name: gke_cluster
         description: The Kubernetes Engine cluster used to run this environment.
-      - name: id
-        description: The identifier for the Composer environment.
-      - name: name
-        description: The name of the Composer environment.
   requirements:
     roles:
       - level: Project
         roles:
           - roles/composer.admin
+          - roles/container.viewer
           - roles/iam.serviceAccountUser
-          - roles/storage.admin
     services:
-      - composer.googleapis.com
       - cloudresourcemanager.googleapis.com
-      - iam.googleapis.com
       - serviceusage.googleapis.com
-      - storage.googleapis.com
+      - iam.googleapis.com
+      - composer.googleapis.com
+      - container.googleapis.com
       - compute.googleapis.com
+      - storage.googleapis.com
+      - artifactregistry.googleapis.com
     providerVersions:
       - source: hashicorp/google
         version: ">= 6.46, < 8"

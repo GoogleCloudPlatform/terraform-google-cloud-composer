@@ -32,9 +32,9 @@ This module provisions a Google Cloud Composer environment.
 | Name | Description |
 |------|-------------|
 | airflow\_uri | The URI of the Apache Airflow Web UI hosted within this environment. |
+| composer\_environment\_id | The identifier for the Composer environment. |
+| composer\_environment\_name | The name of the Composer environment. |
 | dag\_gcs\_prefix | The Cloud Storage prefix of the DAGs for this environment. |
 | gke\_cluster | The Kubernetes Engine cluster used to run this environment. |
-| id | The identifier for the Composer environment. |
-| name | The name of the Composer environment. |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
