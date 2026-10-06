@@ -71,12 +71,15 @@ spec:
       - name: network
         description: The Compute Engine network to be used for machine communications.
         varType: string
+        defaultValue: null
       - name: subnetwork
         description: The Compute Engine subnetwork to be used for machine communications.
         varType: string
+        defaultValue: null
       - name: composer_network_attachment
         description: PSC (Private Service Connect) Network entry point.
         varType: string
+        defaultValue: null
       - name: workloads_config
         description: The Kubernetes workloads configuration for the GKE cluster.
         varType: |-
@@ -127,9 +130,11 @@ spec:
       - name: kms_key_name
         description: Customer-managed Encryption Key for the environment.
         varType: string
+        defaultValue: null
       - name: storage_bucket
         description: Name of an existing Cloud Storage bucket to be used by the environment. If null, Composer creates one.
         varType: string
+        defaultValue: null
         connections:
           - source:
               source: github.com/terraform-google-modules/terraform-google-cloud-storage//modules/simple_bucket
