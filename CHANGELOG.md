@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/GoogleCloudPlatform/terraform-google-cloud-composer/compare/v0.3.0...v0.3.1) (2026-10-15)
+
+
+### Bug Fixes
+
+* populate null defaultValue in composer-environment blueprint metadata ([#9](https://github.com/GoogleCloudPlatform/terraform-google-cloud-composer/issues/9)) ([dd02076](https://github.com/GoogleCloudPlatform/terraform-google-cloud-composer/commit/dd0207685b55015dcf757014a8fa38ca3585b368))
+
 ## [0.2.0](https://github.com/GoogleCloudPlatform/terraform-google-cloud-composer/compare/v0.1.0...v0.2.0) (2026-02-04)
 
 
